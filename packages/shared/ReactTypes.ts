@@ -13,4 +13,5 @@ export interface ReactElementType {
   __mark: string;
 }
 
+// eslint-disable-next-line no-unused-vars
 export type Action<State> = State | ((prevState: State) => State);

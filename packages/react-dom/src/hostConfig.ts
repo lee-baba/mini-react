@@ -1,7 +1,9 @@
 export type Container = Element;
 export type Instance = Element;
 
-export const createInstance = (type: string, props: any) => {
+// export const createInstance = (type: string, props: any) => {
+export const createInstance = (type: string) => {
+  // eslint-disable-next-line no-undef
   const element = document.createElement(type);
   return element;
 };

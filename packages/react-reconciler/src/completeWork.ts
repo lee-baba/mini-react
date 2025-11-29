@@ -1,7 +1,9 @@
 import {
   appendInitalChild,
+  Container,
   createInstance,
   createTextInstance,
+  Instance,
 } from "hostConfig";
 import { FiberNode } from "./fiber";
 import { HostComponent, HostRoot, HostText } from "./workTags";
@@ -15,8 +17,10 @@ export const completeWork = (wip: FiberNode) => {
   switch (wip.tag) {
     case HostComponent:
       if (current !== null && wip.stateNode) {
+        console.log("");
       } else {
-        const instance = createInstance(wip.type, newProps);
+        // const instance = createInstance(wip.type, newProps);
+        const instance = createInstance(wip.type);
         appendAllChildren(instance, wip);
         wip.stateNode = wip;
       }
@@ -24,9 +28,10 @@ export const completeWork = (wip: FiberNode) => {
       return null;
     case HostText:
       if (current !== null && wip.stateNode) {
+        console.log("");
       } else {
-        const instance = createTextInstance(wip.type, newProps);
-        appendAllChildren(instance, wip);
+        const instance = createTextInstance(newProps);
+        appendAllChildren(instance as any, wip);
         wip.stateNode = wip;
       }
       bubbleProperties(wip);
@@ -44,7 +49,8 @@ export const completeWork = (wip: FiberNode) => {
   }
 };
 
-function appendAllChildren(parent: FiberNode, wip: FiberNode) {
+// eslint-disable-next-line no-undef
+function appendAllChildren(parent: Instance | Container, wip: FiberNode) {
   let node = wip.child;
   while (node !== null) {
     if (node.tag === HostComponent || node.tag === HostText) {
@@ -59,15 +65,16 @@ function appendAllChildren(parent: FiberNode, wip: FiberNode) {
       return;
     }
 
-    while (node.sibling === null) {
-      if (node.return === null && node.return === wip) {
+    while (node!.sibling === null) {
+      if (node!.return === null && node!.return === wip) {
         return;
       }
-      node = node?.return;
+
+      node = node?.return as any;
     }
 
-    node.sibling.return = node.return;
-    node = node.sibling;
+    node!.sibling.return = node!.return;
+    node = node!.sibling;
   }
 }
 

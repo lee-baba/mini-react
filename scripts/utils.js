@@ -22,6 +22,7 @@ export function getPackageJson(pkgName) {
 export function getBaseRullupPlugins({
   alias = {
     __DEV__: true,
+    preventAssignment: true,
   },
   typescript = {},
 } = {}) {

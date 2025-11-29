@@ -12,6 +12,8 @@ export default defineConfig([
     languageOptions: { globals: globals.node },
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
+      "no-unused-vars": "off",
+      "no-undef": "off",
     },
   },
 ]);

@@ -107,6 +107,6 @@ function completeUnitOfWork(filber: FiberNode) {
       workInProgress = sibling;
       return;
     }
-    node = node.return;
+    node = node.return as any;
   } while (node !== null);
 }

@@ -1,0 +1,8 @@
+import { FiberNode } from "./fiber";
+
+export function renderWithHoos(wip: FiberNode) {
+  const Component = wip.type;
+  const props = wip.pendingProps;
+  const children = Component(props);
+  return children;
+}

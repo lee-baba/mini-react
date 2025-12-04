@@ -1,8 +1,14 @@
 import { ReactElementType } from "shared/ReactTypes";
 import { FiberNode } from "./fiber";
 import { processUpdateQueue, UpdateQueue } from "./updateQueue";
-import { HostRoot, HostComponent, HostText } from "./workTags";
+import {
+  HostRoot,
+  HostComponent,
+  HostText,
+  FunctionComponent,
+} from "./workTags";
 import { mountChildFiber, reconcileChildFiber } from "./childFiber";
+import { renderWithHoos } from "./fiberHooks";
 
 // 递归中的递阶段
 export const beginWork = (wip: FiberNode) => {
@@ -14,6 +20,8 @@ export const beginWork = (wip: FiberNode) => {
       return updateHostComponent(wip);
     case HostText:
       return null;
+    case FunctionComponent:
+      return updateFunctionComponent(wip);
     default:
       // eslint-disable-next-line no-undef
       if (__DEV__) {
@@ -41,6 +49,13 @@ function updateHostRoot(wip: FiberNode) {
 function updateHostComponent(wip: FiberNode) {
   const nextProps = wip.pendingProps;
   const nextChildren = nextProps.children;
+  reconileChildren(wip, nextChildren);
+  return wip.child;
+}
+
+function updateFunctionComponent(wip: FiberNode) {
+  const nextChildren = renderWithHoos(wip);
+
   reconileChildren(wip, nextChildren);
   return wip.child;
 }

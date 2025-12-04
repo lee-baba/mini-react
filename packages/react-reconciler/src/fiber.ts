@@ -19,7 +19,7 @@ export class FiberNode {
   flags: Flags;
   subtreeFlags: Flags;
   updateQueue: unknown;
-  memoizedState: null;
+  memoizedState: any;
 
   constructor(tag: WorkTag, pendingProps: Props, key: Key) {
     // 示例属性

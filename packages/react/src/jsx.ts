@@ -62,4 +62,4 @@ export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
   }
 };
 
-export const _jsxDEV = jsx;
+export const jsxDEV = jsx;

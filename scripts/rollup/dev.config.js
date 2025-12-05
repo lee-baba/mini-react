@@ -1,6 +1,6 @@
-import reactDomConfig from "./react-dom.config.js";
-import reactConfig from "./react.config.js";
+import reactDomConfig from './react-dom.config';
+import reactConfig from './react.config';
 
 export default () => {
-  return [...reactConfig, ...reactDomConfig];
+	return [...reactConfig, ...reactDomConfig];
 };

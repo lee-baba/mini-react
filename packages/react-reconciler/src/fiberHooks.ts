@@ -33,7 +33,6 @@ export function renderWithHooks(wip: FiberNode) {
 
 	if (current !== null) {
 		// update
-
 		currentDispatcher.current = HooksDispatcherOnUpdate;
 	} else {
 		// mount
@@ -46,6 +45,8 @@ export function renderWithHooks(wip: FiberNode) {
 
 	// 重置操作
 	currentlyRenderingFiber = null;
+	workInProgressHook = null;
+	currentHook = null;
 	return children;
 }
 

@@ -109,11 +109,11 @@ function commitDeletion(childToDelete: FiberNode) {
 
 function commitNestedComponent(
 	root: FiberNode,
-	unCommitUnmount: (fiber: FiberNode) => void
+	onCommitUnmount: (fiber: FiberNode) => void
 ) {
 	let node = root;
 	while (true) {
-		unCommitUnmount(node);
+		onCommitUnmount(node);
 		if (node.child !== null) {
 			node.child.return = node;
 			node = node.child;

@@ -9,7 +9,7 @@ import { Placement } from './fiberFlags';
 import { HostText } from './workTags';
 import { ChildDeletion } from './filberFlags';
 
-type ExistingChildren = Map<string | nuber, FiberNode>;
+type ExistingChildren = Map<string | number, FiberNode>;
 
 function ChildReconciler(shouldTrackEffects: boolean) {
 	function deleteRemainingChildren(
@@ -26,6 +26,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 			childToDelete = childToDelete.sibling;
 		}
 	}
+
 	function deleteChild(returnFiber: FiberNode, childToDelete: FiberNode) {
 		if (!shouldTrackEffects) {
 			return;
@@ -103,7 +104,7 @@ function ChildReconciler(shouldTrackEffects: boolean) {
 	}
 
 	function reconcileChildrenArray(
-		returnFiber: FiberNoe,
+		returnFiber: FiberNode,
 		currentFirstChild: FiberNode | null,
 		newChild: any[]
 	) {

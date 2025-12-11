@@ -4,15 +4,16 @@ import {
 	createInstance,
 	createTextInstance
 } from 'hostConfig';
+import { updateFiberProps } from 'react-dom/src/SyntheticEvent';
 import { FiberNode } from './fiber';
 import { NoFlags, Update } from './fiberFlags';
 import {
 	HostRoot,
 	HostText,
 	HostComponent,
-	FunctionComponent
+	FunctionComponent,
+	Fragment
 } from './workTags';
-import { updateFiberProps } from 'react-dom/src/SyntheticEvent';
 
 function markUpdate(fiber: FiberNode) {
 	fiber.flags |= Update;
@@ -28,11 +29,14 @@ export const completeWork = (wip: FiberNode) => {
 		case HostComponent:
 			if (current !== null && wip.stateNode) {
 				// update
-				// props 是否变化
-				// 变了  Update Flag
+				// 1. props是否变化 {onClick: xx} {onClick: xxx}
+				// 2. 变了 Update flag
+				// className style
 				updateFiberProps(wip.stateNode, newProps);
 			} else {
+				// mount
 				// 1. 构建DOM
+				// const instance = createInstance(wip.type, newProps);
 				const instance = createInstance(wip.type, newProps);
 				// 2. 将DOM插入到DOM树中
 				appendAllChildren(instance, wip);
@@ -43,7 +47,7 @@ export const completeWork = (wip: FiberNode) => {
 		case HostText:
 			if (current !== null && wip.stateNode) {
 				// update
-				const oldText = current.memoizedProps.content;
+				const oldText = current.memoizedProps?.content;
 				const newText = newProps.content;
 				if (oldText !== newText) {
 					markUpdate(wip);
@@ -56,9 +60,8 @@ export const completeWork = (wip: FiberNode) => {
 			bubbleProperties(wip);
 			return null;
 		case HostRoot:
-			bubbleProperties(wip);
-			return null;
 		case FunctionComponent:
+		case Fragment:
 			bubbleProperties(wip);
 			return null;
 		default:
